@@ -1,2 +1,2 @@
 # HierPy
-Dynamically created hierarchical (Navon) stimuli
+Generates hierarchical (Navon) stimuli
