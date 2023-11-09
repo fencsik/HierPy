@@ -7,11 +7,11 @@ if __name__=="__main__":
     draw = ImageDraw.Draw(im)
     # draw an "A"
     # left
-    draw.line([(20, 90), (20, 6)], (0, 0, 0), 10)
+    draw.rectangle([(15, 5), (25, 90)], (0, 0, 0))
     # top
-    draw.line([(20, 10), (80, 10)], (0, 0, 0), 10)
+    draw.rectangle([(15, 5), (85, 15)], (0, 0, 0))
     # right
-    draw.line([(80, 6), (80, 90)], (0, 0, 0), 10)
+    draw.rectangle([(75, 15), (85, 90)], (0, 0, 0))
     # middle
-    draw.line([(20, 50), (80, 50)], (0, 0, 0), 10)
+    draw.rectangle([(15, 45), (85, 55)], (0, 0, 0))
     im.save('drawing.png')
