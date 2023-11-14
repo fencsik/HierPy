@@ -2,28 +2,40 @@
 
 from PIL import Image, ImageDraw
 
-image_size = (100, 100)
-offset = (20, 10)
+image_size = (60, 100)
 background_color = (255, 255, 255)
 foreground_color = (0, 0, 0)
-thickness = 10
+thickness = (10, 10)
 
 w = image_size[0]
 h = image_size[1]
-ox = offset[0]
-oy = offset[1]
 t = thickness
 
-def DrawA(im):
+def DrawLeftSegment(im, thickness):
     draw = ImageDraw.Draw(im)
-    # left
-    draw.rectangle([(ox, oy), (ox + t, h - oy)], foreground_color)
-    # top
-    draw.rectangle([(ox, oy), (w - ox, oy + t)], foreground_color)
-    # right
-    draw.rectangle([(w - ox - t, oy), (w - ox, h - oy)], foreground_color)
-    # middle
-    draw.rectangle([(ox, h / 2 - t / 2), (w - ox, h / 2 + t / 2)], foreground_color)
+    draw.rectangle([0, 0, thickness[0], im.size[1]], foreground_color)
+
+def DrawTopSegment(im, thickness):
+    draw = ImageDraw.Draw(im)
+    draw.rectangle([0, 0, im.size[0], thickness[1]], foreground_color)
+
+def DrawRightSegment(im, thickness):
+    w, h = im.size
+    draw = ImageDraw.Draw(im)
+    draw.rectangle([w - thickness[0], 0, w, h], foreground_color)
+
+def DrawCenterHorizontalSegment(im, thickness):
+    w, h = im.size
+    mid = round(h / 2.0)
+    t = round(thickness[1] / 2.0)
+    draw = ImageDraw.Draw(im)
+    draw.rectangle([0, mid - t, w, mid + t - 1], foreground_color)
+
+def DrawA(im):
+    DrawLeftSegment(im, thickness)
+    DrawRightSegment(im, thickness)
+    DrawTopSegment(im, thickness)
+    DrawCenterHorizontalSegment(im, thickness)
 
 if __name__=="__main__":
     im = Image.new('RGB', image_size, background_color)
