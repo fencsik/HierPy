@@ -3,14 +3,14 @@
 from PIL import Image, ImageDraw
 import numpy as np
 
-image_size = (60, 100)
+large_size = (300, 500) # (x, y) in pixels
+small_size = (.1, .1) # proportion relative to large_size
+large_layout = (3, 5) # composition of large letters (x, y)
+
+small_thickness = (10, 10)
 background_color = (255, 255, 255)
 foreground_color = (0, 0, 0)
-thickness = (10, 10)
 
-w = image_size[0]
-h = image_size[1]
-t = thickness
 
 def DrawLeftSegment(im, thickness):
     draw = ImageDraw.Draw(im)
