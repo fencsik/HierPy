@@ -26,6 +26,8 @@ class PillowDrawer:
         self.image.save(self.filename)
 
     def DrawBoundingBox(self, rect):
+        if isinstance(rect, np.ndarray):
+            rect = rect.tolist()
         self.win.rectangle(rect, outline=foreground_color, width=1)
 
     def DrawDot(self, rect, radius):
