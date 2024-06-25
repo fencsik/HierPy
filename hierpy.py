@@ -30,6 +30,19 @@ class PillowDrawer:
             rect = rect.tolist()
         self.win.rectangle(rect, outline=foreground_color, width=1)
 
+    def DrawBoundingBoxes(self, rect):
+        if len(rect.shape) == 3 and rect.shape[2] == 4:
+            for col in range(rect.shape[0]):
+                for row in range(rect.shape[1]):
+                    self.DrawBoundingBox(rect[col, row, :])
+        elif len(rect.shape) == 2 and rect.shape[1] == 4:
+            for i in range(rect.shape[0]):
+                self.DrawBoundingBox(rect[i, :])
+        elif len(rect.shape) == 1 and rect.shape == 4:
+            self.DrawBoundingBox(rect)
+        else:
+            print("Unknown rect argument: must have 1-3 dimensions with the last one length 4")
+
     def DrawDot(self, rect, radius):
         """Draws a dot in the center of the rect with given radius and fill color"""
         x = (rect[2] - rect[0]) / 2
