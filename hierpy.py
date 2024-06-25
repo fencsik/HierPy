@@ -77,16 +77,71 @@ def DrawA(im):
     DrawTopSegment(im, thickness)
     DrawCenterHorizontalSegment(im, thickness)
 
-if __name__=="__main__":
-    try:
-        small_size = np.array(large_size) * np.array(small_size)
-        large_rect = np.array([0, 0, large_size[0], large_size[1]])
-        small_rect = np.array([0, 0, small_size[0], small_size[1]]) + \
-          np.array([50, 100, 50, 100])
+class HierPySmallLetter:
+    def __init__(self, letter):
+        self.letter = None
+        self.SetLetter(letter)
+
+    def SetLetter(self, letter):
+        self.letter = letter
+
+class HierPy:
+    def __init__(self, large_letter, small_letter):
+        self.large_letter = large_letter
+        self.small_letter = HierPySmallLetter(small_letter)
+        self.Setup(large_letter)
+
+    def Setup(self, letter):
+        self.SetupGrid(letter)
+
+    def Letters(self):
+        return self.large_letter, self.small_letter
+
+    def ComputeSpacingAndOffset(self, display_size, object_size, n_objects):
+        """offset, spacing = ComputeSpacingAndOffset(display_size, object_size, n_objects)
+
+        Computes and returns the offset (external border) between rects
+        and the spacing (space between rects)
+        """
+
+        offset = np.ceil(object_size / 2.0)
+        spacing = ((display_size - 2 * offset - n_objects * object_size) /
+                   (n_objects - 1))
+        return offset, spacing
+
+    def SetupGrid(self, letter):
+        self.grid = self.MakeGrid()
+        print(self.grid)
         pd = PillowDrawer("drawing.png", large_size)
-        pd.DrawDot(large_rect, 5)
-        print(small_rect)
-        pd.DrawBoundingBox(small_rect.tolist())
+        pd.DrawBoundingBoxes(self.grid)
         pd.Save()
-    except NotImplementedError:
-        print("call to non implemented function")
+
+    def MakeGrid(self):
+        """MakeGrid(self)
+
+        Creates an equally spaced grid
+        """
+        lw, lh = large_size
+        sw, sh = np.array(large_size) * np.array(small_size)
+        nx, ny = large_layout
+        offset_x, spacing_x = self.ComputeSpacingAndOffset(lw, sw, nx)
+        offset_y, spacing_y = self.ComputeSpacingAndOffset(lh, sh, ny)
+
+        print(offset_x, spacing_x)
+        print(offset_x * 2 + nx * sw + (nx - 1) * spacing_x)
+
+        grid = np.zeros((nx, ny, 4), dtype=np.int_)
+        for col in range(nx):
+            for row in range(ny):
+                grid[col, row, :] = [
+                    offset_x + (sw + spacing_x) * col,
+                    offset_y + (sh + spacing_y) * row,
+                    offset_x + (sw + spacing_x) * col + sw,
+                    offset_y + (sh + spacing_y) * row + sh]
+        return grid
+
+    def Draw(self, large_letter, small_letter):
+        print('drawing a "{}" composed of "{}"s'.format(large_letter, small_letter))
+
+if __name__=="__main__":
+    letter = HierPy("A", "E")
