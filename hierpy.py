@@ -12,9 +12,33 @@ background_color = (255, 255, 255)
 foreground_color = (0, 0, 0)
 
 
-def DrawLeftSegment(im, thickness):
-    draw = ImageDraw.Draw(im)
-    draw.rectangle([0, 0, thickness[0], im.size[1]], foreground_color)
+class PillowDrawer:
+    """
+    Class for drawing using Pillow
+    """
+
+    def __init__(self, filename, size):
+        self.filename = filename
+        self.image = Image.new('RGB', size, background_color)
+        self.win = ImageDraw.Draw(self.image)
+
+    def Save(self):
+        self.image.save(self.filename)
+
+    def DrawBoundingBox(self, rect):
+        self.win.rectangle(rect, outline=foreground_color, width=1)
+
+    def DrawDot(self, rect, radius):
+        """Draws a dot in the center of the rect with given radius and fill color"""
+        x = (rect[2] - rect[0]) / 2
+        y = (rect[3] - rect[1]) / 2
+        self.win.ellipse([x - radius, y - radius, x + radius, y + radius],
+                             foreground_color)
+
+    def DrawLeftSegment(self, rect):
+        self.win.rectangle([rect[0], rect[1],
+                            rect[0] + small_thickness[0], rect[3]],
+                           foreground_color)
 
 def DrawTopSegment(im, thickness):
     draw = ImageDraw.Draw(im)
