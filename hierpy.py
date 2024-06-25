@@ -63,6 +63,15 @@ def DrawA(im):
     DrawCenterHorizontalSegment(im, thickness)
 
 if __name__=="__main__":
-    im = Image.new('RGB', image_size, background_color)
-    DrawA(im)
-    im.save('drawing.png')
+    try:
+        small_size = np.array(large_size) * np.array(small_size)
+        large_rect = np.array([0, 0, large_size[0], large_size[1]])
+        small_rect = np.array([0, 0, small_size[0], small_size[1]]) + \
+          np.array([50, 100, 50, 100])
+        pd = PillowDrawer("drawing.png", large_size)
+        pd.DrawDot(large_rect, 5)
+        print(small_rect)
+        pd.DrawBoundingBox(small_rect.tolist())
+        pd.Save()
+    except NotImplementedError:
+        print("call to non implemented function")
