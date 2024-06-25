@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 from PIL import Image, ImageDraw
+import numpy as np
 
 image_size = (60, 100)
 background_color = (255, 255, 255)
