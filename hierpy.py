@@ -89,10 +89,10 @@ class HierPy:
     def __init__(self, large_letter, small_letter):
         self.large_letter = large_letter
         self.small_letter = HierPySmallLetter(small_letter)
-        self.Setup(large_letter)
+        self.Setup()
 
-    def Setup(self, letter):
-        self.SetupGrid(letter)
+    def Setup(self):
+        self.SetupGrid()
 
     def Letters(self):
         return self.large_letter, self.small_letter
