@@ -77,6 +77,33 @@ def DrawA(im):
     DrawTopSegment(im, thickness)
     DrawCenterHorizontalSegment(im, thickness)
 
+class GridDrawer:
+    """Grid Drawer class
+
+    Class for "drawing" into a global grid. That is, selecting the grid
+    locations that should be included for a particular segment of a
+    global letter.
+    """
+
+    def __init__(self, size):
+        self.x, self.y = size
+        self.grid = np.zeros((self.x, self.y), dtype=bool)
+
+    def DrawLeftSegment(self):
+        self.grid[0, :] = True
+
+    def DrawTopSegment(self):
+        self.grid[:, 0] = True
+
+    def DrawBottomSegment(self):
+        self.grid[:, -1] = True
+
+    def DrawMiddleSegment(self):
+        self.grid[:, np.floor(self.y/2.0).astype(int)] = True
+
+    def Grid(self):
+        return self.grid
+
 class HierPySmallLetter:
     def __init__(self, letter):
         self.letter = None
