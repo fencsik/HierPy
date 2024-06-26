@@ -136,11 +136,12 @@ class HierPy:
                    (n_objects - 1))
         return offset, spacing
 
-    def SetupGrid(self, letter):
-        self.grid = self.MakeGrid()
-        print(self.grid)
+    def SetupGrid(self):
+        self.master_grid = self.MakeGrid()
+        self.letter_grid = self.SetLetterGrid()
+        print(self.letter_grid)
         pd = PillowDrawer("drawing.png", large_size)
-        pd.DrawBoundingBoxes(self.grid)
+        pd.DrawBoundingBoxes(self.master_grid[self.letter_grid])
         pd.Save()
 
     def MakeGrid(self):
@@ -166,6 +167,14 @@ class HierPy:
                     offset_x + (sw + spacing_x) * col + sw,
                     offset_y + (sh + spacing_y) * row + sh]
         return grid
+
+    def SetLetterGrid(self):
+        gd = GridDrawer(large_layout)
+        gd.DrawLeftSegment()
+        gd.DrawTopSegment()
+        gd.DrawMiddleSegment()
+        gd.DrawBottomSegment()
+        return gd.Grid()
 
     def Draw(self, large_letter, small_letter):
         print('drawing a "{}" composed of "{}"s'.format(large_letter, small_letter))
