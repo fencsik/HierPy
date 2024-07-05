@@ -4,7 +4,8 @@ from PIL import Image, ImageDraw
 import numpy as np
 
 large_size = (300, 500) # (x, y) in pixels
-small_size = (.1, .1) # proportion relative to large_size
+small_size = (.1 * np.array(large_size)).tolist() # define relatively
+#small_size = (30, 30) # define absolutely
 large_layout = (3, 5) # composition of large letters (x, y)
 
 small_thickness = (10, 10)
@@ -149,7 +150,7 @@ class HierPy:
         Creates an equally spaced grid
         """
         lw, lh = large_size
-        sw, sh = np.array(large_size) * np.array(small_size)
+        sw, sh = small_size
         nx, ny = large_layout
         offset_x, spacing_x = self.ComputeSpacingAndOffset(lw, sw, nx)
         offset_y, spacing_y = self.ComputeSpacingAndOffset(lh, sh, ny)
