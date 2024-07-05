@@ -155,9 +155,6 @@ class HierPy:
         offset_x, spacing_x = self.ComputeSpacingAndOffset(lw, sw, nx)
         offset_y, spacing_y = self.ComputeSpacingAndOffset(lh, sh, ny)
 
-        print(offset_x, spacing_x)
-        print(offset_x * 2 + nx * sw + (nx - 1) * spacing_x)
-
         grid = np.zeros((nx, ny, 4), dtype=np.int_)
         for col in range(nx):
             for row in range(ny):
