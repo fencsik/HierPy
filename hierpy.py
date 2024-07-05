@@ -17,13 +17,12 @@ class PillowDrawer:
     Class for drawing using Pillow
     """
 
-    def __init__(self, filename, size):
-        self.filename = filename
+    def __init__(self, size):
         self.image = Image.new('RGB', size, background_color)
         self.win = ImageDraw.Draw(self.image)
 
-    def Save(self):
-        self.image.save(self.filename)
+    def Save(self, filename):
+        self.image.save(filename)
 
     def DrawBoundingBox(self, rect):
         if isinstance(rect, np.ndarray):
@@ -140,9 +139,9 @@ class HierPy:
         self.master_grid = self.MakeGrid()
         self.letter_grid = self.SetLetterGrid()
         print(self.letter_grid)
-        pd = PillowDrawer("drawing.png", large_size)
+        pd = PillowDrawer(large_size)
         pd.DrawBoundingBoxes(self.master_grid[self.letter_grid])
-        pd.Save()
+        pd.Save("drawing.png")
 
     def MakeGrid(self):
         """MakeGrid(self)
