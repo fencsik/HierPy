@@ -111,6 +111,9 @@ class HierPySmallLetter:
     def SetLetter(self, letter):
         self.letter = letter
 
+    def Letter(self):
+        return self.letter
+
 class HierPy:
     def __init__(self, large_letter, small_letter):
         self.large_letter = large_letter
@@ -121,7 +124,10 @@ class HierPy:
         self.SetupGrid()
 
     def Letters(self):
-        return self.large_letter, self.small_letter
+        return self.Letter(), self.small_letter.Letter()
+
+    def Letter(self):
+        return self.large_letter
 
     def ComputeSpacingAndOffset(self, display_size, object_size, n_objects):
         """offset, spacing = ComputeSpacingAndOffset(display_size, object_size, n_objects)
