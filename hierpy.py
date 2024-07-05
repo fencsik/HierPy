@@ -106,7 +106,6 @@ class GridDrawer:
 
 class HierPySmallLetter:
     def __init__(self, letter):
-        self.letter = None
         self.SetLetter(letter)
 
     def SetLetter(self, letter):
