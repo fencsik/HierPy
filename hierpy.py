@@ -12,7 +12,6 @@ small_thickness = (10, 10)
 background_color = (255, 255, 255)
 foreground_color = (0, 0, 0)
 
-
 class PillowDrawer:
     """
     Class for drawing using Pillow
@@ -20,15 +19,45 @@ class PillowDrawer:
 
     def __init__(self, size):
         self.image = Image.new('RGB', size, background_color)
-        self.win = ImageDraw.Draw(self.image)
+        self.bbox = self.image.getbbox(alpha_only = False)
+        self.rect = (np.array(self.bbox) - np.array([0, 0, 1, 1])).tolist()
+        self.draw = ImageDraw.Draw(self.image)
 
     def Save(self, filename):
         self.image.save(filename)
 
-    def DrawBoundingBox(self, rect):
-        if isinstance(rect, np.ndarray):
-            rect = rect.tolist()
-        self.win.rectangle(rect, outline=foreground_color, width=1)
+    def Reset(self):
+        self.draw.rectangle(self.rect, fill=background_color)
+
+    def GetImage(self):
+        return self.image
+
+    def Place(self, im, locations):
+        """Place(image, locations)
+
+        Place the image im into specified location(s) in this image. The
+        im argument must be a structure that has the function GetImage()
+        to get a Pillow image. The locations can be a ROW x COLUMN x 4
+        numpy array, a N x 4 numpy array, or an array/list with 4
+        values.
+        """
+
+        if isinstance(locations, (list, tuple)) and len(locations) == 4:
+            self.image.paste(im.GetImage(), locations)
+        elif len(locations.shape) == 3 and locations.shape[2] == 4:
+            for col in range(locations.shape[0]):
+                for row in range(locations.shape[1]):
+                    self.image.paste(im.GetImage(), locations[col, row, :])
+        elif len(locations.shape) == 2 and locations.shape[1] == 4:
+            for i in range(locations.shape[0]):
+                self.image.paste(im.GetImage(), locations[i, :])
+        elif len(locations.shape) == 1 and locations.shape == 4:
+            self.image.paste(im.GetImage(), locations)
+        else:
+            print("Unknown rect argument: must have 1-3 dimensions with the last one length 4")
+
+    def DrawBoundingBox(self):
+        self.draw.rectangle(self.rect, outline=foreground_color, width=1)
 
     def DrawBoundingBoxes(self, rect):
         if len(rect.shape) == 3 and rect.shape[2] == 4:
@@ -47,11 +76,11 @@ class PillowDrawer:
         """Draws a dot in the center of the rect with given radius and fill color"""
         x = (rect[2] - rect[0]) / 2
         y = (rect[3] - rect[1]) / 2
-        self.win.ellipse([x - radius, y - radius, x + radius, y + radius],
+        self.draw.ellipse([x - radius, y - radius, x + radius, y + radius],
                              foreground_color)
 
     def DrawLeftSegment(self, rect):
-        self.win.rectangle([rect[0], rect[1],
+        self.draw.rectangle([rect[0], rect[1],
                             rect[0] + small_thickness[0], rect[3]],
                            foreground_color)
 
@@ -89,6 +118,12 @@ class GridDrawer:
         self.x, self.y = size
         self.grid = np.zeros((self.x, self.y), dtype=bool)
 
+    def Reset(self):
+        self.grid[:] = False
+
+    def Fill(self):
+        self.grid[:] = True
+
     def DrawLeftSegment(self):
         self.grid[0, :] = True
 
@@ -105,29 +140,79 @@ class GridDrawer:
         return self.grid
 
 class HierPySmallLetter:
-    def __init__(self, letter):
+    def __init__(self, letter=None):
+        self.letter = letter
+        self.win = PillowDrawer(small_size)
         self.SetLetter(letter)
 
     def SetLetter(self, letter):
         self.letter = letter
+        self.win.Reset()
+        self.win.DrawBoundingBox()
 
     def Letter(self):
         return self.letter
 
-class HierPy:
-    def __init__(self, large_letter, small_letter):
-        self.large_letter = large_letter
-        self.small_letter = HierPySmallLetter(small_letter)
-        self.Setup()
+    def GetImage(self):
+        return self.win.GetImage()
 
-    def Setup(self):
-        self.SetupGrid()
+class HierPy:
+    def __init__(self, large_letter=None, small_letter=None):
+        # initialize object components
+        self.letter = large_letter
+        self.win = PillowDrawer(large_size)
+        self.allLocations = self.MakeGrid()
+        self.letterLocations = GridDrawer(large_layout)
+        self.smallLetter = HierPySmallLetter(small_letter)
+
+        # if the large letter was specified, then set it up
+        if self.letter != None:
+            self.SetLargeLetter(self.letter)
+
+    def SetLetters(self, large_letter=None, small_letter=None):
+        self.SetLargeLetter(large_letter)
+        self.SetSmallLetter(small_letter)
+
+    def SetLargeLetter(self, letter):
+        self.letter = letter
+        self.ResetImage()
+        match self.letter:
+            case "E":
+                self.MakeLetterE()
+            case "All":
+                self.Fill()
+            case _:
+                self.Fill()
+                print('Requested letter "{}" not implemented'.format(letter))
+
+    def SetSmallLetter(self, letter):
+        self.smallLetter.SetLetter(letter)
 
     def Letters(self):
-        return self.Letter(), self.small_letter.Letter()
+        return self.Letter(), self.smallLetter.Letter()
 
     def Letter(self):
-        return self.large_letter
+        return self.letter
+
+    def ResetImage(self):
+        self.letterLocations.Reset()
+
+    def Fill(self):
+        self.letterLocations.Fill()
+
+    def Draw(self):
+        self.win.Place(self.smallLetter, self.allLocations[self.letterLocations.Grid()])
+
+    def Save(self, filename):
+        self.Draw()
+        self.win.Save(filename)
+
+    def MakeLetterE(self):
+        gd = self.letterLocations
+        gd.DrawLeftSegment()
+        gd.DrawTopSegment()
+        gd.DrawMiddleSegment()
+        gd.DrawBottomSegment()
 
     def ComputeSpacingAndOffset(self, display_size, object_size, n_objects):
         """offset, spacing = ComputeSpacingAndOffset(display_size, object_size, n_objects)
@@ -140,14 +225,6 @@ class HierPy:
         spacing = ((display_size - 2 * offset - n_objects * object_size) /
                    (n_objects - 1))
         return offset, spacing
-
-    def SetupGrid(self):
-        self.master_grid = self.MakeGrid()
-        self.letter_grid = self.SetLetterGrid()
-        print(self.letter_grid)
-        pd = PillowDrawer(large_size)
-        pd.DrawBoundingBoxes(self.master_grid[self.letter_grid])
-        pd.Save("drawing.png")
 
     def MakeGrid(self):
         """MakeGrid(self)
@@ -170,16 +247,15 @@ class HierPy:
                     offset_y + (sh + spacing_y) * row + sh]
         return grid
 
-    def SetLetterGrid(self):
-        gd = GridDrawer(large_layout)
-        gd.DrawLeftSegment()
-        gd.DrawTopSegment()
-        gd.DrawMiddleSegment()
-        gd.DrawBottomSegment()
-        return gd.Grid()
-
-    def Draw(self, large_letter, small_letter):
-        print('drawing a "{}" composed of "{}"s'.format(large_letter, small_letter))
+def DrawLeftSegment(self, rect):
+    self.draw.rectangle([rect[0], rect[1],
+                         rect[0] + small_thickness[0], rect[3]],
+                        foreground_color)
+def DrawSmallLetter():
+    im = PillowDrawer(small_size)
+    im.DrawBoundingBox()
+    return(im)
 
 if __name__=="__main__":
-    letter = HierPy("A", "E")
+    letter = HierPy("E", "L")
+    letter.Save("drawing.png")
