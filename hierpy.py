@@ -79,10 +79,15 @@ class PillowDrawer:
         self.draw.ellipse([x - radius, y - radius, x + radius, y + radius],
                              foreground_color)
 
-    def DrawLeftSegment(self, rect):
-        self.draw.rectangle([rect[0], rect[1],
-                            rect[0] + small_thickness[0], rect[3]],
-                           foreground_color)
+    def DrawLeftSegment(self):
+        self.draw.rectangle([self.rect[0], self.rect[1],
+                             self.rect[0] + small_thickness[0], self.rect[3]],
+                           fill=foreground_color)
+
+    def DrawBottomSegment(self):
+        self.draw.rectangle([self.rect[0], self.rect[3] - small_thickness[1],
+                             self.rect[2], self.rect[3]],
+                            fill=foreground_color)
 
 def DrawTopSegment(im, thickness):
     draw = ImageDraw.Draw(im)
@@ -148,7 +153,18 @@ class HierPySmallLetter:
     def SetLetter(self, letter):
         self.letter = letter
         self.win.Reset()
-        self.win.DrawBoundingBox()
+        match self.letter:
+            case "L":
+                self.MakeLetterL()
+            case "All":
+                self.Fill()
+            case _:
+                self.Fill()
+                print('Requested small letter "{}" not implemented'.format(letter))
+
+    def MakeLetterL(self):
+        self.win.DrawLeftSegment()
+        self.win.DrawBottomSegment()
 
     def Letter(self):
         return self.letter
