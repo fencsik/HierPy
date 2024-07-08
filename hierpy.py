@@ -4,7 +4,7 @@ from PIL import Image, ImageDraw
 import numpy as np
 
 large_size = (300, 500) # (x, y) in pixels
-small_size = (.1 * np.array(large_size)).tolist() # define relatively
+small_size = (.1 * np.array(large_size)).astype(int).tolist() # define relatively
 #small_size = (30, 30) # define absolutely
 large_layout = (3, 5) # composition of large letters (x, y)
 
