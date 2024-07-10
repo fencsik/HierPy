@@ -140,7 +140,7 @@ class GridDrawer:
     def DrawBottomSegment(self):
         self.grid[:, -1] = True
 
-    def DrawMiddleSegment(self):
+    def DrawHorizontalCenterSegment(self):
         self.grid[:, np.floor(self.y/2.0).astype(int)] = True
 
     def Grid(self):
