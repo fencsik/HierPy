@@ -3,6 +3,8 @@
 from PIL import Image, ImageDraw
 import numpy as np
 
+letters_to_draw = ["H", "A"] # global, local
+
 large_size = (500, 500) # (x, y) in pixels
 #small_size = (.1 * np.array(large_size)).astype(int).tolist() # define relatively
 small_size = (60, 60) # define absolutely
@@ -311,5 +313,5 @@ def DrawSmallLetter():
     return(im)
 
 if __name__=="__main__":
-    letter = HierPy("E", "L")
+    letter = HierPy(letters_to_draw[0], letters_to_draw[1])
     letter.Save("drawing.png")
