@@ -164,8 +164,12 @@ class HierPySmallLetter:
                 self.MakeLetterE()
             case "F":
                 self.MakeLetterF()
+            case "H":
+                self.MakeLetterH()
             case "L":
                 self.MakeLetterL()
+            case "U":
+                self.MakeLetterU()
             case "All":
                 self.Fill()
             case _:
@@ -194,8 +198,18 @@ class HierPySmallLetter:
         self.win.DrawTopSegment()
         self.win.DrawHorizontalCenterSegment()
 
+    def MakeLetterH(self):
+        self.win.DrawLeftSegment()
+        self.win.DrawRightSegment()
+        self.win.DrawHorizontalCenterSegment()
+
     def MakeLetterL(self):
         self.win.DrawLeftSegment()
+        self.win.DrawBottomSegment()
+
+    def MakeLetterU(self):
+        self.win.DrawLeftSegment()
+        self.win.DrawRightSegment()
         self.win.DrawBottomSegment()
 
     def Letter(self):
