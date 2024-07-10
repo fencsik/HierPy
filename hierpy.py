@@ -113,28 +113,6 @@ class PillowDrawer:
                              self.rect[2], self.vmidpoint + self.halfvt],
                             fill=self.fg)
 
-def DrawTopSegment(im, thickness):
-    draw = ImageDraw.Draw(im)
-    draw.rectangle([0, 0, im.size[0], thickness[1]], foreground_color)
-
-def DrawRightSegment(im, thickness):
-    w, h = im.size
-    draw = ImageDraw.Draw(im)
-    draw.rectangle([w - thickness[0], 0, w, h], foreground_color)
-
-def DrawCenterHorizontalSegment(im, thickness):
-    w, h = im.size
-    mid = round(h / 2.0)
-    t = round(thickness[1] / 2.0)
-    draw = ImageDraw.Draw(im)
-    draw.rectangle([0, mid - t, w, mid + t - 1], foreground_color)
-
-def DrawA(im):
-    DrawLeftSegment(im, thickness)
-    DrawRightSegment(im, thickness)
-    DrawTopSegment(im, thickness)
-    DrawCenterHorizontalSegment(im, thickness)
-
 class GridDrawer:
     """Grid Drawer class
 
