@@ -178,6 +178,14 @@ class HierPySmallLetter:
         self.letter = letter
         self.win.Reset()
         match self.letter:
+            case "A":
+                self.MakeLetterA()
+            case "C":
+                self.MakeLetterC()
+            case "E":
+                self.MakeLetterE()
+            case "F":
+                self.MakeLetterF()
             case "L":
                 self.MakeLetterL()
             case "All":
@@ -185,6 +193,28 @@ class HierPySmallLetter:
             case _:
                 self.Fill()
                 print('Requested small letter "{}" not implemented'.format(letter))
+
+    def MakeLetterA(self):
+        self.win.DrawLeftSegment()
+        self.win.DrawRightSegment()
+        self.win.DrawTopSegment()
+        self.win.DrawHorizontalCenterSegment()
+
+    def MakeLetterC(self):
+        self.win.DrawLeftSegment()
+        self.win.DrawTopSegment()
+        self.win.DrawBottomSegment()
+
+    def MakeLetterE(self):
+        self.win.DrawLeftSegment()
+        self.win.DrawTopSegment()
+        self.win.DrawHorizontalCenterSegment()
+        self.win.DrawBottomSegment()
+
+    def MakeLetterF(self):
+        self.win.DrawLeftSegment()
+        self.win.DrawTopSegment()
+        self.win.DrawHorizontalCenterSegment()
 
     def MakeLetterL(self):
         self.win.DrawLeftSegment()
