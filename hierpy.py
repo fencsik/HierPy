@@ -93,9 +93,24 @@ class PillowDrawer:
                              self.rect[0] + self.ht, self.rect[3]],
                            fill=self.fg)
 
+    def DrawRightSegment(self):
+        self.draw.rectangle([self.rect[2] - self.ht, self.rect[1],
+                             self.rect[2], self.rect[3]],
+                            fill=self.fg)
+
+    def DrawTopSegment(self):
+        self.draw.rectangle([self.rect[0], self.rect[1],
+                             self.rect[2], self.rect[1] + self.vt],
+                            fill=self.fg)
+
     def DrawBottomSegment(self):
         self.draw.rectangle([self.rect[0], self.rect[3] - self.vt,
                              self.rect[2], self.rect[3]],
+                            fill=self.fg)
+
+    def DrawHorizontalCenterSegment(self):
+        self.draw.rectangle([self.rect[0], self.vmidpoint - self.halfvt,
+                             self.rect[2], self.vmidpoint + self.halfvt],
                             fill=self.fg)
 
 def DrawTopSegment(im, thickness):
