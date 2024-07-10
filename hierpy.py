@@ -149,11 +149,16 @@ class GridDrawer:
     def Grid(self):
         return self.grid
 
-class HierPySmallLetter:
+class HierPyBase:
+    """HierPyBase
+
+    Base class for the other HierPy classes. Centralizes the drawing
+    commands. Base classes should define self.win as a class that has
+    the various segment drawing commands, at a bare minimum.
+    """
     def __init__(self, letter=None):
         self.letter = letter
-        self.win = PillowDrawer(small_size)
-        self.SetLetter(letter)
+        self.win = None
 
     def SetLetter(self, letter):
         self.letter = letter
@@ -218,37 +223,31 @@ class HierPySmallLetter:
     def Letter(self):
         return self.letter
 
+class HierPySmallLetter(HierPyBase):
+    def __init__(self, letter=None):
+        self.letter = letter
+        self.win = PillowDrawer(small_size)
+        self.SetLetter(letter)
+
     def GetImage(self):
         return self.win.GetImage()
 
-class HierPy:
+class HierPy(HierPyBase):
     def __init__(self, large_letter=None, small_letter=None):
         # initialize object components
         self.letter = large_letter
-        self.win = PillowDrawer(large_size)
+        self.image = PillowDrawer(large_size)
         self.allLocations = self.MakeGrid()
-        self.letterLocations = GridDrawer(large_layout)
+        self.win = GridDrawer(large_layout)
         self.smallLetter = HierPySmallLetter(small_letter)
 
         # if the large letter was specified, then set it up
         if self.letter != None:
-            self.SetLargeLetter(self.letter)
+            self.SetLetter(self.letter)
 
     def SetLetters(self, large_letter=None, small_letter=None):
-        self.SetLargeLetter(large_letter)
+        self.SetLetter(large_letter)
         self.SetSmallLetter(small_letter)
-
-    def SetLargeLetter(self, letter):
-        self.letter = letter
-        self.ResetImage()
-        match self.letter:
-            case "E":
-                self.MakeLetterE()
-            case "All":
-                self.Fill()
-            case _:
-                self.Fill()
-                print('Requested letter "{}" not implemented'.format(letter))
 
     def SetSmallLetter(self, letter):
         self.smallLetter.SetLetter(letter)
@@ -256,28 +255,18 @@ class HierPy:
     def Letters(self):
         return self.Letter(), self.smallLetter.Letter()
 
-    def Letter(self):
-        return self.letter
-
     def ResetImage(self):
-        self.letterLocations.Reset()
+        self.win.Reset()
 
     def Fill(self):
-        self.letterLocations.Fill()
+        self.win.Fill()
 
     def Draw(self):
-        self.win.Place(self.smallLetter, self.allLocations[self.letterLocations.Grid()])
+        self.image.Place(self.smallLetter, self.allLocations[self.win.Grid()])
 
     def Save(self, filename):
         self.Draw()
-        self.win.Save(filename)
-
-    def MakeLetterE(self):
-        gd = self.letterLocations
-        gd.DrawLeftSegment()
-        gd.DrawTopSegment()
-        gd.DrawMiddleSegment()
-        gd.DrawBottomSegment()
+        self.image.Save(filename)
 
     def ComputeSpacingAndOffset(self, display_size, object_size, n_objects):
         """offset, spacing = ComputeSpacingAndOffset(display_size, object_size, n_objects)
