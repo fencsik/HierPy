@@ -134,6 +134,9 @@ class GridDrawer:
     def DrawLeftSegment(self):
         self.grid[0, :] = True
 
+    def DrawRightSegment(self):
+        self.grid[-1, :] = True
+
     def DrawTopSegment(self):
         self.grid[:, 0] = True
 
