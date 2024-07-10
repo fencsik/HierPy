@@ -20,6 +20,10 @@ class PillowDrawer:
     def __init__(self, size):
         # extract/compute values needed for drawing operations
         self.ht, self.vt = small_thickness
+        self.halfht = int(self.ht / 2.)
+        self.halfvt = int(self.vt / 2.)
+        self.hmidpoint = int(size[0] / 2.)
+        self.vmidpoint = int(size[1] / 2.)
         self.fg = foreground_color
         self.bg = background_color
 
