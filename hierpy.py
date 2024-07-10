@@ -18,7 +18,12 @@ class PillowDrawer:
     """
 
     def __init__(self, size):
-        self.image = Image.new('RGB', size, background_color)
+        # extract/compute values needed for drawing operations
+        self.ht, self.vt = small_thickness
+        self.fg = foreground_color
+        self.bg = background_color
+
+        self.image = Image.new('RGB', size, self.bg)
         self.bbox = self.image.getbbox(alpha_only = False)
         self.rect = (np.array(self.bbox) - np.array([0, 0, 1, 1])).tolist()
         self.draw = ImageDraw.Draw(self.image)
@@ -27,7 +32,7 @@ class PillowDrawer:
         self.image.save(filename)
 
     def Reset(self):
-        self.draw.rectangle(self.rect, fill=background_color)
+        self.draw.rectangle(self.rect, fill=self.bg)
 
     def GetImage(self):
         return self.image
@@ -57,7 +62,7 @@ class PillowDrawer:
             print("Unknown rect argument: must have 1-3 dimensions with the last one length 4")
 
     def DrawBoundingBox(self):
-        self.draw.rectangle(self.rect, outline=foreground_color, width=1)
+        self.draw.rectangle(self.rect, outline=self.fg, width=1)
 
     def DrawBoundingBoxes(self, rect):
         if len(rect.shape) == 3 and rect.shape[2] == 4:
@@ -77,17 +82,17 @@ class PillowDrawer:
         x = (rect[2] - rect[0]) / 2
         y = (rect[3] - rect[1]) / 2
         self.draw.ellipse([x - radius, y - radius, x + radius, y + radius],
-                             foreground_color)
+                             self.fg)
 
     def DrawLeftSegment(self):
         self.draw.rectangle([self.rect[0], self.rect[1],
-                             self.rect[0] + small_thickness[0], self.rect[3]],
-                           fill=foreground_color)
+                             self.rect[0] + self.ht, self.rect[3]],
+                           fill=self.fg)
 
     def DrawBottomSegment(self):
-        self.draw.rectangle([self.rect[0], self.rect[3] - small_thickness[1],
+        self.draw.rectangle([self.rect[0], self.rect[3] - self.vt,
                              self.rect[2], self.rect[3]],
-                            fill=foreground_color)
+                            fill=self.fg)
 
 def DrawTopSegment(im, thickness):
     draw = ImageDraw.Draw(im)
