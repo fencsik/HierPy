@@ -3,10 +3,10 @@
 from PIL import Image, ImageDraw
 import numpy as np
 
-large_size = (300, 500) # (x, y) in pixels
-small_size = (.1 * np.array(large_size)).astype(int).tolist() # define relatively
-#small_size = (30, 30) # define absolutely
-large_layout = (3, 5) # composition of large letters (x, y)
+large_size = (500, 500) # (x, y) in pixels
+#small_size = (.1 * np.array(large_size)).astype(int).tolist() # define relatively
+small_size = (60, 60) # define absolutely
+large_layout = (5, 5) # composition of large letters (x, y)
 
 small_thickness = (10, 10)
 background_color = (255, 255, 255)
