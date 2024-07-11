@@ -278,6 +278,7 @@ class HierPy(HierPyBase):
         """
 
         offset = np.ceil(object_size / 2.0)
+        offset = 0
         spacing = ((display_size - 2 * offset - n_objects * object_size) /
                    (n_objects - 1))
         return offset, spacing
