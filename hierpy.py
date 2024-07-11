@@ -4,7 +4,7 @@ from PIL import Image, ImageDraw
 import numpy as np
 import os
 
-letters_to_draw = ["H", "A", "T"]
+letters_to_draw = ["H", "P", "S", "T"]
 directory = "stim"
 
 large_size = (500, 500) # (x, y) in pixels
@@ -214,6 +214,10 @@ class HierPyBase:
                 self.MakeLetterH()
             case "L":
                 self.MakeLetterL()
+            case "P":
+                self.MakeLetterP()
+            case "S":
+                self.MakeLetterS()
             case "T":
                 self.MakeLetterT()
             case "U":
@@ -253,6 +257,19 @@ class HierPyBase:
 
     def MakeLetterL(self):
         self.win.DrawLeftSegment()
+        self.win.DrawBottomSegment()
+
+    def MakeLetterP(self):
+        self.win.DrawTopSegment()
+        self.win.DrawLeftSegment()
+        self.win.DrawUpperRightSegment()
+        self.win.DrawHorizontalCenterSegment()
+
+    def MakeLetterS(self):
+        self.win.DrawTopSegment()
+        self.win.DrawUpperLeftSegment()
+        self.win.DrawHorizontalCenterSegment()
+        self.win.DrawLowerRightSegment()
         self.win.DrawBottomSegment()
 
     def MakeLetterT(self):
