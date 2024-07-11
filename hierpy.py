@@ -4,7 +4,7 @@ from PIL import Image, ImageDraw
 import numpy as np
 import os
 
-letters_to_draw = ["H", "A"]
+letters_to_draw = ["H", "A", "T"]
 directory = "stim"
 
 large_size = (500, 500) # (x, y) in pixels
@@ -117,6 +117,11 @@ class PillowDrawer:
                              self.rect[2], self.vmidpoint + self.halfvt],
                             fill=self.fg)
 
+    def DrawVerticalCenterSegment(self):
+        self.draw.rectangle([self.hmidpoint - self.halfht, self.rect[1],
+                             self.hmidpoint + self.halfht, self.rect[3]],
+                            fill=self.fg)
+
 class GridDrawer:
     """Grid Drawer class
 
@@ -150,6 +155,9 @@ class GridDrawer:
     def DrawHorizontalCenterSegment(self):
         self.grid[:, np.floor(self.y/2.0).astype(int)] = True
 
+    def DrawVerticalCenterSegment(self):
+        self.grid[np.floor(self.x/2.0).astype(int), :] = True
+
     def Grid(self):
         return self.grid
 
@@ -180,6 +188,8 @@ class HierPyBase:
                 self.MakeLetterH()
             case "L":
                 self.MakeLetterL()
+            case "T":
+                self.MakeLetterT()
             case "U":
                 self.MakeLetterU()
             case "All":
@@ -218,6 +228,10 @@ class HierPyBase:
     def MakeLetterL(self):
         self.win.DrawLeftSegment()
         self.win.DrawBottomSegment()
+
+    def MakeLetterT(self):
+        self.win.DrawTopSegment()
+        self.win.DrawVerticalCenterSegment()
 
     def MakeLetterU(self):
         self.win.DrawLeftSegment()
