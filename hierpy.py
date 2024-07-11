@@ -2,8 +2,10 @@
 
 from PIL import Image, ImageDraw
 import numpy as np
+import os
 
-letters_to_draw = ["H", "A"] # global, local
+letters_to_draw = ["H", "A"]
+directory = "stim"
 
 large_size = (500, 500) # (x, y) in pixels
 #small_size = (.1 * np.array(large_size)).astype(int).tolist() # define relatively
@@ -314,5 +316,16 @@ def DrawSmallLetter():
     return(im)
 
 if __name__=="__main__":
-    letter = HierPy(letters_to_draw[0], letters_to_draw[1])
-    letter.Save("drawing.png")
+    if directory == None or not isinstance(directory, str):
+        directory = ""
+    else:
+        if not os.path.exists(directory):
+            directory = os.path.normpath(directory)
+            os.makedirs(directory)
+
+    letter = HierPy("A", "A")
+    for global_letter in letters_to_draw:
+        for local_letter in letters_to_draw:
+            letter.SetLetters(global_letter, local_letter)
+            letter.Save(os.path.join(directory,
+                                         "{}-{}.png".format(global_letter, local_letter)))
