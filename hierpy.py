@@ -132,6 +132,8 @@ class GridDrawer:
 
     def __init__(self, size):
         self.x, self.y = size
+        self.hmidpoint = int(np.floor(self.x / 2.))
+        self.vmidpoint = int(np.floor(self.y / 2.))
         self.grid = np.zeros((self.x, self.y), dtype=bool)
 
     def Reset(self):
