@@ -253,6 +253,10 @@ class HierPy(HierPyBase):
         self.SetLetter(large_letter)
         self.SetSmallLetter(small_letter)
 
+    def SetLetter(self, letter):
+        self.image.Reset()
+        super().SetLetter(letter)
+
     def SetSmallLetter(self, letter):
         self.smallLetter.SetLetter(letter)
 
