@@ -182,10 +182,10 @@ class GridDrawer:
         self.grid[:, -1] = True
 
     def DrawHorizontalCenterSegment(self):
-        self.grid[:, np.floor(self.y/2.0).astype(int)] = True
+        self.grid[:, self.vmidpoint] = True
 
     def DrawVerticalCenterSegment(self):
-        self.grid[np.floor(self.x/2.0).astype(int), :] = True
+        self.grid[self.hmidpoint, :] = True
 
     def Grid(self):
         return self.grid
