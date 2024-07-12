@@ -42,6 +42,9 @@ class PillowDrawer:
     def Reset(self):
         self.draw.rectangle(self.rect, fill=self.bg)
 
+    def Fill(self):
+        self.draw.rectangle(self.rect, fill=self.fg)
+
     def GetImage(self):
         return self.image
 
