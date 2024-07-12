@@ -204,6 +204,8 @@ class HierPyBase:
     def SetLetter(self, letter):
         self.letter = letter
         self.win.Reset()
+        if letter == None:
+            return
         match self.letter:
             case "A":
                 self.MakeLetterA()
@@ -387,7 +389,7 @@ if __name__=="__main__":
             directory = os.path.normpath(directory)
             os.makedirs(directory)
 
-    letter = HierPy("A", "A")
+    letter = HierPy()
     for global_letter in letters_to_draw:
         for local_letter in letters_to_draw:
             letter.SetLetters(global_letter, local_letter)
