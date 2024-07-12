@@ -147,11 +147,29 @@ class PillowDrawer:
                            (self.rect[0] + self.ht, self.rect[1])],
                           fill=self.fg)
 
+    def DrawLeftDiagonalSegmentCorner(self):
+        self.draw.polygon([(self.rect[0], self.rect[1]),
+                           (self.rect[0] + self.halfht, self.rect[1]),
+                           (self.rect[2], self.rect[3] - self.halfvt),
+                           (self.rect[2], self.rect[3]),
+                           (self.rect[2] - self.halfht, self.rect[3]),
+                           (self.rect[0], self.rect[1] + self.halfvt)],
+                          fill=self.fg)
+
     def DrawRightDiagonalSegment(self):
         self.draw.polygon([(self.rect[2] - self.ht, self.rect[1]),
                            (self.rect[0], self.rect[3]),
                            (self.rect[0] + self.ht, self.rect[3]),
                            (self.rect[2], self.rect[1])],
+                          fill=self.fg)
+
+    def DrawRightDiagonalSegmentCorner(self):
+        self.draw.polygon([(self.rect[2], self.rect[1]),
+                           (self.rect[2], self.rect[1] + self.halfvt),
+                           (self.rect[0] + self.halfht, self.rect[3]),
+                           (self.rect[0], self.rect[3]),
+                           (self.rect[0], self.rect[3] - self.halfvt),
+                           (self.rect[2] - self.halfht, self.rect[1])],
                           fill=self.fg)
 
     def DrawRightDiagonalSegmentVertical(self):
@@ -212,10 +230,16 @@ class GridDrawer:
     def DrawLeftDiagonalSegment(self):
         np.fill_diagonal(self.grid, True)
 
+    def DrawLeftDiagonalSegmentCorner(self):
+        self.DrawLeftDiagonalSegment()
+
     def DrawRightDiagonalSegment(self):
         np.fill_diagonal(np.rot90(self.grid), True)
 
     def DrawRightDiagonalSegmentVertical(self):
+        self.DrawRightDiagonalSegment()
+
+    def DrawRightDiagonalSegmentCorner(self):
         self.DrawRightDiagonalSegment()
 
     def Grid(self):
@@ -329,8 +353,8 @@ class HierPyBase:
         self.win.DrawBottomSegment()
 
     def MakeLetterX(self):
-        self.win.DrawLeftDiagonalSegment()
-        self.win.DrawRightDiagonalSegment()
+        self.win.DrawLeftDiagonalSegmentCorner()
+        self.win.DrawRightDiagonalSegmentCorner()
 
     def MakeLetterZ(self):
         self.win.DrawTopSegment()
