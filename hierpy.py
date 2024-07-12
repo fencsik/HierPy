@@ -140,6 +140,28 @@ class PillowDrawer:
                              self.hmidpoint + self.halfht, self.rect[3]],
                             fill=self.fg)
 
+    def DrawLeftDiagonalSegment(self):
+        self.draw.polygon([(self.rect[0], self.rect[1]),
+                           (self.rect[2] - self.ht, self.rect[3]),
+                           (self.rect[2], self.rect[3]),
+                           (self.rect[0] + self.ht, self.rect[1])],
+                          fill=self.fg)
+
+    def DrawRightDiagonalSegment(self):
+        self.draw.polygon([(self.rect[2] - self.ht, self.rect[1]),
+                           (self.rect[0], self.rect[3]),
+                           (self.rect[0] + self.ht, self.rect[3]),
+                           (self.rect[2], self.rect[1])],
+                          fill=self.fg)
+
+    def DrawRightDiagonalSegmentVertical(self):
+        # has vertical endpoints that look better on a "Z"
+        self.draw.polygon([(self.rect[2], self.rect[1]),
+                           (self.rect[0], self.rect[3] - self.vt),
+                           (self.rect[0], self.rect[3]),
+                           (self.rect[2], self.rect[1] + self.vt)],
+                          fill=self.fg)
+
 class GridDrawer:
     """Grid Drawer class
 
@@ -186,6 +208,15 @@ class GridDrawer:
 
     def DrawVerticalCenterSegment(self):
         self.grid[self.hmidpoint, :] = True
+
+    def DrawLeftDiagonalSegment(self):
+        np.fill_diagonal(self.grid, True)
+
+    def DrawRightDiagonalSegment(self):
+        np.fill_diagonal(np.rot90(self.grid), True)
+
+    def DrawRightDiagonalSegmentVertical(self):
+        self.DrawRightDiagonalSegment()
 
     def Grid(self):
         return self.grid
