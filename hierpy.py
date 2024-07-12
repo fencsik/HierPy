@@ -300,6 +300,8 @@ class HierPyBase:
                 self.MakeLetterH()
             case "L":
                 self.MakeLetterL()
+            case "M":
+                self.MakeLetterM()
             case "N":
                 self.MakeLetterN()
             case "P":
@@ -312,6 +314,8 @@ class HierPyBase:
                 self.MakeLetterU()
             case "X":
                 self.MakeLetterX()
+            case "Y":
+                self.MakeLetterY()
             case "Z":
                 self.MakeLetterZ()
             case "All":
@@ -351,6 +355,11 @@ class HierPyBase:
         self.win.DrawLeftSegment()
         self.win.DrawBottomSegment()
 
+    def MakeLetterM(self):
+        self.win.DrawLeftSegment()
+        self.win.DrawRightSegment()
+        self.win.DrawUpperV()
+
     def MakeLetterN(self):
         self.win.DrawLeftSegment()
         self.win.DrawRightSegment()
@@ -381,6 +390,10 @@ class HierPyBase:
     def MakeLetterX(self):
         self.win.DrawLeftDiagonalSegmentCorner()
         self.win.DrawRightDiagonalSegmentCorner()
+
+    def MakeLetterY(self):
+        self.win.DrawUpperV()
+        self.win.DrawLowerVerticalCenterSegment()
 
     def MakeLetterZ(self):
         self.win.DrawTopSegment()
