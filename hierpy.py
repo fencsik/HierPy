@@ -140,6 +140,11 @@ class PillowDrawer:
                              self.hmidpoint + self.halfht, self.rect[3]],
                             fill=self.fg)
 
+    def DrawLowerVerticalCenterSegment(self):
+        self.draw.rectangle([self.hmidpoint - self.halfht, self.vmidpoint,
+                             self.hmidpoint + self.halfht, self.rect[3]],
+                            fill=self.fg)
+
     def DrawLeftDiagonalSegment(self):
         self.draw.polygon([(self.rect[0], self.rect[1]),
                            (self.rect[2] - self.ht, self.rect[3]),
@@ -178,6 +183,19 @@ class PillowDrawer:
                            (self.rect[0], self.rect[3] - self.vt),
                            (self.rect[0], self.rect[3]),
                            (self.rect[2], self.rect[1] + self.vt)],
+                          fill=self.fg)
+
+    def DrawUpperV(self):
+        # draw the upper diagonals that would be used in a "Y"
+        self.draw.polygon([(self.rect[0], self.rect[1]),
+                           (self.hmidpoint - self.halfht, self.vmidpoint),
+                           (self.hmidpoint + self.halfht, self.vmidpoint),
+                           (self.rect[0] + self.ht, self.rect[1])],
+                          fill=self.fg)
+        self.draw.polygon([(self.rect[2], self.rect[1]),
+                           (self.hmidpoint + self.halfht, self.vmidpoint),
+                           (self.hmidpoint - self.halfht, self.vmidpoint),
+                           (self.rect[2] - self.ht, self.rect[1])],
                           fill=self.fg)
 
 class GridDrawer:
@@ -227,6 +245,9 @@ class GridDrawer:
     def DrawVerticalCenterSegment(self):
         self.grid[self.hmidpoint, :] = True
 
+    def DrawLowerVerticalCenterSegment(self):
+        self.grid[self.hmidpoint, self.vmidpoint:self.y] = True
+
     def DrawLeftDiagonalSegment(self):
         np.fill_diagonal(self.grid, True)
 
@@ -241,6 +262,11 @@ class GridDrawer:
 
     def DrawRightDiagonalSegmentCorner(self):
         self.DrawRightDiagonalSegment()
+
+    def DrawUpperV(self):
+        # draw the upper diagonals that would be used in a "Y"
+        np.fill_diagonal(self.grid[0:self.hmidpoint+1, 0:self.vmidpoint+1], True)
+        np.fill_diagonal(np.flipud(self.grid)[0:self.hmidpoint+1, 0:self.vmidpoint+1], True)
 
     def Grid(self):
         return self.grid
