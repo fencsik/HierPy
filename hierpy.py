@@ -4,7 +4,7 @@ from PIL import Image, ImageDraw
 import numpy as np
 import os
 
-letters_to_draw = ["H", "P", "S", "T"]
+letters_to_draw = ["H", "N", "X", "Z"]
 directory = "stim"
 
 large_size = (500, 500) # (x, y) in pixels
@@ -250,6 +250,8 @@ class HierPyBase:
                 self.MakeLetterH()
             case "L":
                 self.MakeLetterL()
+            case "N":
+                self.MakeLetterN()
             case "P":
                 self.MakeLetterP()
             case "S":
@@ -258,6 +260,10 @@ class HierPyBase:
                 self.MakeLetterT()
             case "U":
                 self.MakeLetterU()
+            case "X":
+                self.MakeLetterX()
+            case "Z":
+                self.MakeLetterZ()
             case "All":
                 self.Fill()
             case _:
@@ -295,6 +301,11 @@ class HierPyBase:
         self.win.DrawLeftSegment()
         self.win.DrawBottomSegment()
 
+    def MakeLetterN(self):
+        self.win.DrawLeftSegment()
+        self.win.DrawRightSegment()
+        self.win.DrawLeftDiagonalSegment()
+
     def MakeLetterP(self):
         self.win.DrawTopSegment()
         self.win.DrawLeftSegment()
@@ -316,6 +327,15 @@ class HierPyBase:
         self.win.DrawLeftSegment()
         self.win.DrawRightSegment()
         self.win.DrawBottomSegment()
+
+    def MakeLetterX(self):
+        self.win.DrawLeftDiagonalSegment()
+        self.win.DrawRightDiagonalSegment()
+
+    def MakeLetterZ(self):
+        self.win.DrawTopSegment()
+        self.win.DrawBottomSegment()
+        self.win.DrawRightDiagonalSegmentVertical()
 
     def Letter(self):
         return self.letter
