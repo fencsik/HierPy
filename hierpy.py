@@ -370,7 +370,7 @@ class HierPyBase:
     def MakeLetterN(self):
         self.win.DrawLeftSegment()
         self.win.DrawRightSegment()
-        self.win.DrawLeftDiagonalHorizontal()
+        self.win.DrawLeftDiagonal()
 
     def MakeLetterO(self):
         self.win.DrawLeftSegment()
@@ -411,7 +411,7 @@ class HierPyBase:
     def MakeLetterZ(self):
         self.win.DrawTopSegment()
         self.win.DrawBottomSegment()
-        self.win.DrawRightDiagonalVertical()
+        self.win.DrawRightDiagonal()
 
     def Letter(self):
         return self.letter
