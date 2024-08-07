@@ -16,6 +16,8 @@ small_thickness = (10, 10)
 background_color = (255, 255, 255)
 foreground_color = (0, 0, 0)
 
+diagonal_offset = 2
+
 class PillowDrawer:
     """
     Class for drawing using Pillow
@@ -30,6 +32,7 @@ class PillowDrawer:
         self.halfvt = int(self.vt / 2.)
         self.hmidpoint = int(size[0] / 2.)
         self.vmidpoint = int(size[1] / 2.)
+        self.do = diagonal_offset
         self.fg = foreground_color
         self.bg = background_color
 
@@ -143,61 +146,61 @@ class PillowDrawer:
                             fill=self.fg)
 
     def DrawLowerVerticalCenterSegment(self):
-        self.draw.rectangle([self.hmidpoint - self.halfht, self.vmidpoint,
+        self.draw.rectangle([self.hmidpoint - self.halfht - 1, self.vmidpoint - 1,
                              self.hmidpoint + self.halfht, self.rect[3]],
                             fill=self.fg)
 
     def DrawLeftDiagonal(self):
         self.draw.polygon([(self.rect[0], self.rect[1]),
-                           (self.rect[0] + self.halfht, self.rect[1]),
-                           (self.rect[2], self.rect[3] - self.halfvt),
+                           (self.rect[0] + self.halfht + self.do, self.rect[1]),
+                           (self.rect[2], self.rect[3] - self.halfvt - self.do),
                            (self.rect[2], self.rect[3]),
-                           (self.rect[2] - self.halfht, self.rect[3]),
-                           (self.rect[0], self.rect[1] + self.halfvt)],
+                           (self.rect[2] - self.halfht - self.do, self.rect[3]),
+                            (self.rect[0], self.rect[1] + self.halfvt + self.do)],
                           fill=self.fg)
 
     def DrawLeftDiagonalHorizontal(self):
         self.draw.polygon([(self.rect[0], self.rect[1]),
-                           (self.rect[2] - self.ht, self.rect[3]),
+                           (self.rect[2] - self.ht - self.do, self.rect[3]),
                            (self.rect[2], self.rect[3]),
-                           (self.rect[0] + self.ht, self.rect[1])],
+                           (self.rect[0] + self.ht + self.do, self.rect[1])],
                           fill=self.fg)
 
     def DrawRightDiagonal(self):
         self.draw.polygon([(self.rect[2], self.rect[1]),
-                           (self.rect[2], self.rect[1] + self.halfvt),
-                           (self.rect[0] + self.halfht, self.rect[3]),
+                           (self.rect[2], self.rect[1] + self.halfvt + self.do),
+                           (self.rect[0] + self.halfht + self.do, self.rect[3]),
                            (self.rect[0], self.rect[3]),
-                           (self.rect[0], self.rect[3] - self.halfvt),
-                           (self.rect[2] - self.halfht, self.rect[1])],
+                           (self.rect[0], self.rect[3] - self.halfvt - self.do),
+                           (self.rect[2] - self.halfht - self.do, self.rect[1])],
                           fill=self.fg)
 
     def DrawRightDiagonalHorizontal(self):
-        self.draw.polygon([(self.rect[2] - self.ht, self.rect[1]),
+        self.draw.polygon([(self.rect[2] - self.ht - self.do, self.rect[1]),
                            (self.rect[0], self.rect[3]),
-                           (self.rect[0] + self.ht, self.rect[3]),
+                           (self.rect[0] + self.ht + self.do, self.rect[3]),
                            (self.rect[2], self.rect[1])],
                           fill=self.fg)
 
     def DrawRightDiagonalVertical(self):
         # has vertical endpoints that look better on a "Z"
         self.draw.polygon([(self.rect[2], self.rect[1]),
-                           (self.rect[0], self.rect[3] - self.vt),
+                           (self.rect[0], self.rect[3] - self.vt - self.do),
                            (self.rect[0], self.rect[3]),
-                           (self.rect[2], self.rect[1] + self.vt)],
+                           (self.rect[2], self.rect[1] + self.vt + self.do)],
                           fill=self.fg)
 
     def DrawUpperV(self):
         # draw the upper diagonals that would be used in a "Y"
         self.draw.polygon([(self.rect[0], self.rect[1]),
-                           (self.hmidpoint - self.halfht, self.vmidpoint),
-                           (self.hmidpoint + self.halfht, self.vmidpoint),
-                           (self.rect[0] + self.ht, self.rect[1])],
+                           (self.hmidpoint - self.halfht - 1, self.vmidpoint - 2),
+                           (self.hmidpoint + self.halfht, self.vmidpoint - 2),
+                           (self.rect[0] + self.ht + self.do, self.rect[1])],
                           fill=self.fg)
         self.draw.polygon([(self.rect[2], self.rect[1]),
-                           (self.hmidpoint + self.halfht, self.vmidpoint),
-                           (self.hmidpoint - self.halfht, self.vmidpoint),
-                           (self.rect[2] - self.ht, self.rect[1])],
+                           (self.hmidpoint + self.halfht, self.vmidpoint - 2),
+                           (self.hmidpoint - self.halfht - 1, self.vmidpoint - 2),
+                           (self.rect[2] - self.ht - self.do, self.rect[1])],
                           fill=self.fg)
 
 class GridDrawer:
