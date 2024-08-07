@@ -24,6 +24,8 @@ class PillowDrawer:
     def __init__(self, size):
         # extract/compute values needed for drawing operations
         self.ht, self.vt = small_thickness
+        self.ht -= 1
+        self.vt -= 1
         self.halfht = int(self.ht / 2.)
         self.halfvt = int(self.vt / 2.)
         self.hmidpoint = int(size[0] / 2.)
@@ -131,12 +133,12 @@ class PillowDrawer:
                             fill=self.fg)
 
     def DrawHorizontalCenterSegment(self):
-        self.draw.rectangle([self.rect[0], self.vmidpoint - self.halfvt,
+        self.draw.rectangle([self.rect[0], self.vmidpoint - self.halfvt - 1,
                              self.rect[2], self.vmidpoint + self.halfvt],
                             fill=self.fg)
 
     def DrawVerticalCenterSegment(self):
-        self.draw.rectangle([self.hmidpoint - self.halfht, self.rect[1],
+        self.draw.rectangle([self.hmidpoint - self.halfht - 1, self.rect[1],
                              self.hmidpoint + self.halfht, self.rect[3]],
                             fill=self.fg)
 
