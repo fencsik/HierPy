@@ -6,6 +6,7 @@ import os
 
 letters_to_draw = ["H", "N", "X", "Z"]
 directory = "stim"
+file_suffix = "-black"
 
 large_size = (500, 500) # (x, y) in pixels
 #small_size = (.1 * np.array(large_size)).astype(int).tolist() # define relatively
@@ -521,4 +522,5 @@ if __name__=="__main__":
         for local_letter in letters_to_draw:
             letter.SetLetters(global_letter, local_letter)
             letter.Save(os.path.join(directory,
-                                         "{}-{}.png".format(global_letter, local_letter)))
+                                         "{}-{}{}.png".format(global_letter, local_letter,
+                                                                  file_suffix)))
