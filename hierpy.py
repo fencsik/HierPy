@@ -9,16 +9,16 @@ letters_to_draw = ["A", "C", "E", "F", "H", "L", "M", "N",
 directory = "stim"
 file_suffix = "-black"
 
-large_size = (500, 500) # (x, y) in pixels
+large_size = (250, 250) # (x, y) in pixels
 #small_size = (.1 * np.array(large_size)).astype(int).tolist() # define relatively
-small_size = (60, 60) # define absolutely
+small_size = (30, 30) # define absolutely
 large_layout = (5, 5) # composition of large letters (x, y)
 
-small_thickness = (10, 10)
+small_thickness = (6, 6)
 background_color = (255, 255, 255)
 foreground_color = (0, 0, 0)
 
-diagonal_offset = 2
+diagonal_offset = 1
 
 class PillowDrawer:
     """
