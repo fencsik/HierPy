@@ -292,44 +292,43 @@ class HierPyBase:
         self.win.Reset()
         if letter == None:
             return
-        match self.letter:
-            case "A":
-                self.MakeLetterA()
-            case "C":
-                self.MakeLetterC()
-            case "E":
-                self.MakeLetterE()
-            case "F":
-                self.MakeLetterF()
-            case "H":
-                self.MakeLetterH()
-            case "L":
-                self.MakeLetterL()
-            case "M":
-                self.MakeLetterM()
-            case "N":
-                self.MakeLetterN()
-            case "O":
-                self.MakeLetterO()
-            case "P":
-                self.MakeLetterP()
-            case "S":
-                self.MakeLetterS()
-            case "T":
-                self.MakeLetterT()
-            case "U":
-                self.MakeLetterU()
-            case "X":
-                self.MakeLetterX()
-            case "Y":
-                self.MakeLetterY()
-            case "Z":
-                self.MakeLetterZ()
-            case "All":
-                self.Fill()
-            case _:
-                self.Fill()
-                print('Requested small letter "{}" not implemented'.format(letter))
+        elif letter == "A":
+            self.MakeLetterA()
+        elif letter == "C":
+            self.MakeLetterC()
+        elif letter == "E":
+            self.MakeLetterE()
+        elif letter == "F":
+            self.MakeLetterF()
+        elif letter == "H":
+            self.MakeLetterH()
+        elif letter == "L":
+            self.MakeLetterL()
+        elif letter == "M":
+            self.MakeLetterM()
+        elif letter == "N":
+            self.MakeLetterN()
+        elif letter == "O":
+            self.MakeLetterO()
+        elif letter == "P":
+            self.MakeLetterP()
+        elif letter == "S":
+            self.MakeLetterS()
+        elif letter == "T":
+            self.MakeLetterT()
+        elif letter == "U":
+            self.MakeLetterU()
+        elif letter == "X":
+            self.MakeLetterX()
+        elif letter == "Y":
+            self.MakeLetterY()
+        elif letter == "Z":
+            self.MakeLetterZ()
+        elif letter == "All":
+            self.Fill()
+        else:
+            self.Fill()
+            print('Requested small letter "{}" not implemented'.format(letter))
 
     def MakeLetterA(self):
         self.win.DrawLeftSegment()
