@@ -11,7 +11,7 @@ file_suffix = "-black"
 
 large_size = (250, 250) # (x, y) in pixels
 #small_size = (.1 * np.array(large_size)).astype(int).tolist() # define relatively
-small_size = (30, 30) # define absolutely
+small_size = (38, 38) # define absolutely
 large_layout = (5, 5) # composition of large letters (x, y)
 
 small_thickness = (6, 6)
