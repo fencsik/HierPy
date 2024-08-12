@@ -15,8 +15,8 @@ small_size = (38, 38) # define absolutely
 large_layout = (5, 5) # composition of large letters (x, y)
 
 small_thickness = (6, 6)
-background_color = (255, 255, 255)
-foreground_color = (0, 0, 0)
+background_color = tuple([150] * 3)
+foreground_color = tuple([0] * 3)
 
 diagonal_offset = 1
 
