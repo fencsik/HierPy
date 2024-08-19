@@ -9,12 +9,12 @@ letters_to_draw = ["A", "C", "E", "F", "H", "L", "M", "N",
 directory = "stim"
 file_suffix = "-black"
 
-large_size = (250, 250) # (x, y) in pixels
+large_size = (190, 250) # (x, y) in pixels
 #small_size = (.1 * np.array(large_size)).astype(int).tolist() # define relatively
-small_size = (38, 38) # define absolutely
+small_size = (28, 36) # define absolutely
 large_layout = (5, 5) # composition of large letters (x, y)
 
-small_thickness = (6, 6)
+small_thickness = (4, 4)
 background_color = tuple([150] * 3)
 foreground_color = tuple([0] * 3)
 
