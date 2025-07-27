@@ -501,15 +501,6 @@ class HierPy(HierPyBase):
                     offset_y + (sh + spacing_y) * row + sh]
         return grid
 
-def DrawLeftSegment(self, rect):
-    self.draw.rectangle([rect[0], rect[1],
-                         rect[0] + small_thickness[0], rect[3]],
-                        foreground_color)
-def DrawSmallLetter():
-    im = PillowDrawer(small_size)
-    im.DrawBoundingBox()
-    return(im)
-
 if __name__=="__main__":
     if directory is None or not isinstance(directory, str):
         directory = ""
