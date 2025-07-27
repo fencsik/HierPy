@@ -292,7 +292,7 @@ class HierPyBase:
     def SetLetter(self, letter):
         self.letter = letter
         self.win.Reset()
-        if letter == None:
+        if letter is None:
             return
         match self.letter:
             case "A":
@@ -437,7 +437,7 @@ class HierPy(HierPyBase):
         self.smallLetter = HierPySmallLetter(small_letter)
 
         # if the large letter was specified, then set it up
-        if self.letter != None:
+        if self.letter is not None:
             self.SetLetter(self.letter)
 
     def SetLetters(self, large_letter=None, small_letter=None):
@@ -511,7 +511,7 @@ def DrawSmallLetter():
     return(im)
 
 if __name__=="__main__":
-    if directory == None or not isinstance(directory, str):
+    if directory is None or not isinstance(directory, str):
         directory = ""
     else:
         if not os.path.exists(directory):
