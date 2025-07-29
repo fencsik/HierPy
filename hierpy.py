@@ -238,7 +238,7 @@ class GridDrawer:
         self.grid[-1, 0:self.vmidpoint] = True
 
     def DrawLowerRightSegment(self):
-        self.grid[-1, self.vmidpoint:-1] = True
+        self.grid[-1, self.vmidpoint:] = True
 
     def DrawTopSegment(self):
         self.grid[:, 0] = True
