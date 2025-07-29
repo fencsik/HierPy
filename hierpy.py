@@ -112,6 +112,11 @@ class PillowDrawer:
                              self.rect[0] + self.ht, self.vmidpoint],
                             fill=self.fg)
 
+    def DrawLowerLeftSegment(self):
+        self.draw.rectangle([self.rect[0], self.vmidpoint,
+                             self.rect[0] + self.ht, self.rect[3]],
+                            fill=self.fg)
+
     def DrawRightSegment(self):
         self.draw.rectangle([self.rect[2] - self.ht, self.rect[1],
                              self.rect[2], self.rect[3]],
@@ -230,6 +235,9 @@ class GridDrawer:
 
     def DrawUpperLeftSegment(self):
         self.grid[0, 0:self.vmidpoint] = True
+
+    def DrawLowerLeftSegment(self):
+        self.grid[0, self.vmidpoint:] = True
 
     def DrawRightSegment(self):
         self.grid[-1, :] = True
