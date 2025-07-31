@@ -67,7 +67,7 @@ class PillowDrawer:
         values.
         """
 
-        if isinstance(locations, (list, tuple)) and len(locations) == 4:
+        if isinstance(locations, (list, tuple, np.ndarray)) and len(locations) == 4:
             self.image.paste(im.GetImage(), locations)
         elif len(locations.shape) == 3 and locations.shape[2] == 4:
             for col in range(locations.shape[0]):
