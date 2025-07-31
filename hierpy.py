@@ -4,9 +4,8 @@ from PIL import Image, ImageDraw
 import numpy as np
 import os
 
-letters_to_draw = ["A", "C", "E", "F", "H", "L", "M", "N",
-                   "P", "S", "T", "U", "X", "Y", "Z"]
-nMasks = 1
+letters_to_draw = ["A", "E", "H", "S"]
+nMasks = 4
 directory = "stim"
 file_suffix = "-black"
 
