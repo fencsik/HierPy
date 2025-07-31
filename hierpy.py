@@ -547,9 +547,10 @@ if __name__=="__main__":
             os.makedirs(directory)
 
     letter = HierPy()
-    for global_letter in letters_to_draw:
-        for local_letter in letters_to_draw:
-            letter.SetLetters(global_letter, local_letter)
-            letter.Save(os.path.join(directory,
-                                         "{}-{}{}.png".format(global_letter, local_letter,
-                                                                  file_suffix)))
+    if letters_to_draw is not None:
+        for global_letter in letters_to_draw:
+            for local_letter in letters_to_draw:
+                letter.SetLetters(global_letter, local_letter)
+                letter.Save(os.path.join(directory,
+                                             "{}-{}{}.png".format(global_letter, local_letter,
+                                                                      file_suffix)))
