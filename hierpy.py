@@ -6,6 +6,7 @@ import os
 
 letters_to_draw = ["A", "C", "E", "F", "H", "L", "M", "N",
                    "P", "S", "T", "U", "X", "Y", "Z"]
+nMasks = 1
 directory = "stim"
 file_suffix = "-black"
 
@@ -563,3 +564,7 @@ if __name__=="__main__":
                 letter.Save(os.path.join(directory,
                                              "{}-{}{}.png".format(global_letter, local_letter,
                                                                       file_suffix)))
+
+    mask = RandomMask()
+    for n in range(nMasks):
+        mask.Save(os.path.join(directory, "mask-{}.png".format(n+1)))
