@@ -425,6 +425,33 @@ class HierPyBase:
         self.win.DrawBottomSegment()
         self.win.DrawRightDiagonal()
 
+    def MakeRandom(self, nSegments):
+        """MakeRandom(nSegments)
+
+        Randoms draws up to 7 segments from the digit 8. Primary use is
+        for drawing masks.
+        """
+
+        if nSegments < 0:
+            nSegments = 0
+        if nSegments > 7:
+            nSegments = 7
+        segments = rng.choice(7, nSegments, replace=False)
+        if 0 in segments:
+            self.win.DrawTopSegment()
+        if 1 in segments:
+            self.win.DrawUpperLeftSegment()
+        if 2 in segments:
+            self.win.DrawUpperRightSegment()
+        if 3 in segments:
+            self.win.DrawHorizontalCenterSegment()
+        if 4 in segments:
+            self.win.DrawLowerLeftSegment()
+        if 5 in segments:
+            self.win.DrawLowerRightSegment()
+        if 6 in segments:
+            self.win.DrawBottomSegment()
+
     def Letter(self):
         return self.letter
 
