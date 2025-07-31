@@ -20,6 +20,8 @@ foreground_color = tuple([0] * 3)
 
 diagonal_offset = 1
 
+rng = np.random.default_rng()
+
 class PillowDrawer:
     """
     Class for drawing using Pillow
