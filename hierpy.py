@@ -299,6 +299,12 @@ class HierPyBase:
         self.letter = letter
         self.win = None
 
+    def Clear(self):
+        self.win.Reset()
+
+    def Fill(self):
+        self.win.Fill()
+
     def SetLetter(self, letter):
         self.letter = letter
         self.win.Reset()
@@ -490,12 +496,6 @@ class HierPy(HierPyBase):
 
     def Letters(self):
         return self.Letter(), self.smallLetter.Letter()
-
-    def Clear(self):
-        self.win.Reset()
-
-    def Fill(self):
-        self.win.Fill()
 
     def Draw(self):
         self.image.Place(self.smallLetter, self.allLocations[self.win.Grid()])
