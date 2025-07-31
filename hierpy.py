@@ -538,6 +538,15 @@ class HierPy(HierPyBase):
                     offset_y + (sh + spacing_y) * row + sh]
         return grid
 
+class RandomMask(HierPy):
+    def Draw(self):
+        nrows, ncols, x = self.allLocations.shape
+        for r in range(nrows):
+            for c in range(ncols):
+                self.smallLetter.Clear()
+                self.smallLetter.MakeRandom(4)
+                self.image.Place(self.smallLetter, self.allLocations[r, c, :])
+
 if __name__=="__main__":
     if directory is None or not isinstance(directory, str):
         directory = ""
