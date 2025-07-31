@@ -491,7 +491,7 @@ class HierPy(HierPyBase):
     def Letters(self):
         return self.Letter(), self.smallLetter.Letter()
 
-    def ResetImage(self):
+    def Clear(self):
         self.win.Reset()
 
     def Fill(self):
